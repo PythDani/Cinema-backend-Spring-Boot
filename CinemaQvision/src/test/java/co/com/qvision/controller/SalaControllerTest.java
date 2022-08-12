@@ -1,14 +1,12 @@
-package co.com.qvision.cinema.controllers;
+package co.com.qvision.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -28,10 +27,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import co.com.qvision.controller.SalaController;
 import co.com.qvision.entity.Sala;
 import co.com.qvision.repository.SalaRepository;
 import co.com.qvision.service.SalaService;
+
+
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(SalaController.class)
@@ -68,8 +68,7 @@ class SalaControllerTest {
 	}
 
 	@Test
-	public void testList() throws Exception {
-
+	void testList() throws Exception {
 		List<Sala> expected = salaService.listService();
 
 		assertThat(expected == salaList);
@@ -79,12 +78,10 @@ class SalaControllerTest {
 		BDDMockito.given(salaService.listService()).willReturn(salaList);
 
 		this.mvc.perform(get("http://localhost:8080/sala/lista")).andExpect(status().isOk());
-
 	}
 
 	@Test
-	public void testDetail() throws Exception {
-
+	void testDetail() throws Exception {
 		Sala actual = sala1;
 		System.out.println(actual.getIdSala());
 
@@ -107,8 +104,7 @@ class SalaControllerTest {
 	}
 
 	@Test
-	public void testCreate() throws Exception {
-
+	void testCreate() throws IOException, Exception {
 		Sala sala = new Sala();
 
 		sala.setNombre("Test name");
@@ -121,12 +117,10 @@ class SalaControllerTest {
 
 		this.mvc.perform(post("http://localhost:8080/sala/create/").contentType(MediaType.APPLICATION_JSON)
 				.content(JsonUtil.toJson(sala))).andExpect(status().isCreated());
-
 	}
 
 	@Test
 	void testUpdate() throws Exception {
-
 		Sala expected = sala1;
 
 		System.out.println(expected);
@@ -138,8 +132,8 @@ class SalaControllerTest {
 
 	}
 
-	/**
+	/*
 	 * @Test void testDelete() { fail("Not yet implemented"); }
-	 **/
+	 */
 
 }
