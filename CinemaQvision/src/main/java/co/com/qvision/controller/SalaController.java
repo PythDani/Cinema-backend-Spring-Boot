@@ -25,7 +25,9 @@ public class SalaController {
 
 	@Autowired
 	SalaService salaService;
-
+	
+	
+	
 	@GetMapping("/lista")
 	public ResponseEntity<?> list() {
 

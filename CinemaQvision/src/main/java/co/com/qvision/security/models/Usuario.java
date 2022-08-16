@@ -1,7 +1,7 @@
 package co.com.qvision.security.models;
 
+
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,19 +9,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import co.com.qvision.entity.Reserva;
 import co.com.qvision.security.enums.TipoDocumentoNombre;
 
 @Entity
@@ -56,14 +52,22 @@ public class Usuario {
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "idDocumento")
 	private TipoDocumento tipoDocumento;
-
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
-	private Set<Rol> roles = new HashSet<>();
-
+	
+	
 	@OneToMany(mappedBy = "usuario", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
 			CascadeType.REFRESH })
-	private List<Reserva> reserva;
+	private Set<UsuarioRol> usuarioRol;
+	
+	@Transient
+	private Set<Rol> roles = new HashSet<>();
+
+	/*@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
+	private Set<Rol> roles = new HashSet<>();*/
+
+	/*@OneToMany(mappedBy = "usuario", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+			CascadeType.REFRESH })
+	private List<Reserva> reserva;*/
 
 	public Usuario() {
 		super();
@@ -106,12 +110,18 @@ public class Usuario {
 		this.nombres = nombres;
 	}
 
-	public String getApellidos() {
+	public String usuario() {
 		return apellidos;
 	}
 
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
+	}
+	
+	
+
+	public String getApellidos() {
+		return apellidos;
 	}
 
 	public String getCorreo() {
@@ -146,6 +156,14 @@ public class Usuario {
 		this.tipoDocumentoNombre = tipoDocumentoNombre;
 	}
 
+	public Set<?> getUsuarioRol() {
+		return usuarioRol;
+	}
+
+	public void setUsuarioRol(Set<UsuarioRol> usuarioRol) {
+		this.usuarioRol = usuarioRol;
+	}
+
 	public Set<Rol> getRoles() {
 		return roles;
 	}
@@ -153,14 +171,14 @@ public class Usuario {
 	public void setRoles(Set<Rol> roles) {
 		this.roles = roles;
 	}
+	
+	
 
-	public List<Reserva> getReserva() {
-		return reserva;
+	
+		
 	}
 
-	public void setReserva(List<Reserva> reserva) {
-		this.reserva = reserva;
-	}
+	
 
-}
+
 

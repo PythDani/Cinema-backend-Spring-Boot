@@ -12,7 +12,7 @@ import co.com.qvision.security.enums.TipoDocumentoNombre;
 
 public class UsuarioPrincipal implements UserDetails {
 	
-	
+	private long idUsuario;
 	private String documento;	
 	private String nombres;	
 	private String apellidos;	
