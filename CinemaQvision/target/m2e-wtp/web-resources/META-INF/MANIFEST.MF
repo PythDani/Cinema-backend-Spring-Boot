@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Built-By: Usuario
-Build-Jdk: 11.0.15
-Implementation-Title: CinemaQvision
-Implementation-Version: 0.0.1
-Implementation-Vendor-Id: co.com.qvision
-Implementation-URL: https://spring.io/projects/spring-boot/CinemaQvision
-Created-By: Maven Integration for Eclipse
-
